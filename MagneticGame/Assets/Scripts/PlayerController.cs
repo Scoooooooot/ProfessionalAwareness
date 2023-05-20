@@ -12,11 +12,6 @@ public class PlayerController : MonoBehaviour
         move = context.ReadValue<Vector2>();
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         MovePlayer();
@@ -27,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
 
         if (movement.magnitude > 0) {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 10000000f);         
         }
 
         transform.Translate(movement * speed * Time.deltaTime, Space.World);

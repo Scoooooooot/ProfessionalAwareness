@@ -10,8 +10,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Magnet magnetScript;
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private float jumpVelocity = 1f;
+    [SerializeField] End endScript;
     private Vector2 move;
     private int playerCoins = 0;
+    private bool isGrounded = true;
+    private Rigidbody rb;
 
     public void OnMove(InputAction.CallbackContext context) {
         move = context.ReadValue<Vector2>(); // Take values from WASD (only using AD for movement)
@@ -23,7 +27,21 @@ public class PlayerController : MonoBehaviour
         magnetScript.AlternateMagnetState();
     }
 
-    void Update()
+    public void Jump(InputAction.CallbackContext context) {
+        if (!context.started) {
+            return;
+        }
+        if (!isGrounded) {
+            return;
+        }
+        rb.AddForce(Vector3.up * jumpVelocity, ForceMode.VelocityChange);
+    }
+
+    private void Start() {
+        rb = gameObject.GetComponent<Rigidbody>();
+    }
+
+    private void Update()
     {
         if (!magnetScript.magnetPulling && !magnetScript.atMagnetBlock) { // Stops player being able to move during magnet pull
             MovePlayer();
@@ -43,7 +61,14 @@ public class PlayerController : MonoBehaviour
 
     public void AddCoin(int amount) {
         playerCoins += amount;
-        coinsText.text = playerCoins.ToString();
+        coinsText.text = playerCoins.ToString() + "/" + endScript.GetCoinsNeeded();
+    }
+    public int GetCoins() {
+        return playerCoins;
+    }
+
+    public void ChangeIsGrounded(bool state) {
+        isGrounded = state;
     }
 }
 

@@ -25,7 +25,7 @@ public class Magnet : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity)) {
                 if (hit.transform.gameObject.CompareTag("MagnetBlock")) { // Cast a ray to see if a magnet block is within range
-                    float speed = 2 / hit.distance; // Changes speed based on distance
+                    float speed = 10 / hit.distance; // Changes speed based on distance
                     if (magnetPulling) {
                         playerObject.transform.position = Vector3.Lerp(playerObject.transform.position, hit.transform.position, speed * Time.deltaTime); // Move towards the magnet block
                     }
@@ -42,7 +42,7 @@ public class Magnet : MonoBehaviour
                     magnetPulling = false;
                 }
                 if (hit.transform.gameObject.CompareTag("Coin")) {
-                    float speed = 2 / hit.distance;
+                    float speed = 5 / hit.distance;
                     hit.transform.position = Vector3.Lerp(hit.transform.position, transform.position, speed * Time.deltaTime);
                 }
 

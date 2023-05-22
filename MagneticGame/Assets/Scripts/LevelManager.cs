@@ -8,7 +8,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Image level1Image;
     [SerializeField] Image level2Image;
     [SerializeField] Image level3Image;
-    [SerializeField] Image level4Image;
 
     [SerializeField] Sprite greenImage;
     [SerializeField] Sprite redImage;
@@ -25,9 +24,6 @@ public class LevelManager : MonoBehaviour
         if (!PlayerPrefs.HasKey("Level3")) {
             PlayerPrefs.SetInt("Level3", 0);
         }
-        if (!PlayerPrefs.HasKey("Level4")) {    
-            PlayerPrefs.SetInt("Level4", 0);
-        }
 
         SetUI();
 
@@ -37,7 +33,6 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("Level1", 0);
         PlayerPrefs.SetInt("Level2", 0);
         PlayerPrefs.SetInt("Level3", 0);
-        PlayerPrefs.SetInt("Level4", 0);
         SetUI();
     }
     private void SetUI() {
@@ -57,12 +52,6 @@ public class LevelManager : MonoBehaviour
             level3Image.sprite = redImage;
         } else {
             level3Image.sprite = greenImage;
-        }
-
-        if (PlayerPrefs.GetInt("Level4") == 0) {
-            level4Image.sprite = redImage;
-        } else {
-            level4Image.sprite = greenImage;
         }
     }
 }

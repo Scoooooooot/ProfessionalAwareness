@@ -29,15 +29,16 @@ public class Menu : MonoBehaviour
     }
     
     public void Level2() {
-        SceneManager.LoadScene("Level2");
+        if (PlayerPrefs.GetInt("Level1") != 0) {
+            SceneManager.LoadScene("Level2");
+        }
     }
     
     public void Level3() {
-        SceneManager.LoadScene("Level3");
+        if (PlayerPrefs.GetInt("Level2") != 0) {
+            SceneManager.LoadScene("Level3");
+        }
     }
     
-    public void Level4() {
-        SceneManager.LoadScene("Level4");
-    }
 
 }

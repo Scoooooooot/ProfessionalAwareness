@@ -4,16 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Magnet magnetScript;
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private float jumpVelocity = 1f;
     [SerializeField] End endScript;
+    [SerializeField] private int levelLives = 0;
     private Vector2 move;
     private int playerCoins = 0;
+    private int playerLives = 0;
     private bool isGrounded = true;
     private Rigidbody rb;
 
@@ -39,6 +43,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start() {
         rb = gameObject.GetComponent<Rigidbody>();
+        playerLives = levelLives;
+        livesText.text = playerLives.ToString();
+        coinsText.text = playerCoins.ToString() + "/" + endScript.GetCoinsNeeded();
     }
 
     private void Update()
@@ -47,6 +54,7 @@ public class PlayerController : MonoBehaviour
             MovePlayer();
         }
     }
+
 
     public void MovePlayer() {
         Vector3 movement = new Vector3(-move.x, 0f, 0f);
@@ -65,6 +73,18 @@ public class PlayerController : MonoBehaviour
     }
     public int GetCoins() {
         return playerCoins;
+    }
+
+    public void TakeLives(int amount) {
+        playerLives -= amount;
+        livesText.text = playerLives.ToString();
+        if (playerLives <= 0) {
+            SceneManager.LoadScene("LevelSelect");
+        }
+    }
+
+    public int GetLives() {
+        return playerLives;
     }
 
     public void ChangeIsGrounded(bool state) {
